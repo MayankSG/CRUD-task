@@ -9,6 +9,7 @@ import { AppRoute } from '../../app/routing/AppRoute.enum';
 import { SnackbarContext } from '../../app';
 import styles from './Form.module.css';
 import Loader from '../Loader';
+import RemoveItemDialog from '../RemoveItemDialog';
 
 const FormContainer = ({ type }: Pick<FormProps, "type">) => {
   const history = useHistory();
@@ -17,6 +18,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [formSchema, setFormSchema] = useState<FormInputs>({ title: '', body: '' });
+  const [showDialog, setShowDialog] = useState(false);
 
   const showNotifier = (open: boolean, severity: AlertColor, message: string) => {
     contextData?.setNotifierState({ open, severity, message });
@@ -76,6 +78,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         if (res.data) {
           setLoading(false);
           showNotifier(true, "success", "Item has been removed successfully!!");
+          handleRemoveDialog();
           history.push(AppRoute.home);
         }
       })
@@ -84,6 +87,8 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         showNotifier(true, "error", "There is some error on item remove. Please try again!!");
       });
   };
+
+  const handleRemoveDialog = () => setShowDialog(!showDialog);
 
   return (
     <>
@@ -95,9 +100,10 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
           setFormSchema={setFormSchema}
           handleSave={handleSave}
           handleUpdate={handleUpdate}
-          handleRemove={handleRemove}
+          handleRemoveDialog={handleRemoveDialog}
         />
       </div>
+      <RemoveItemDialog open={showDialog} onClose={handleRemoveDialog} action={handleRemove} />
     </>
   );
 };

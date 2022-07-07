@@ -5,7 +5,7 @@ export type FormProps = {
 	formSchema: FormInputs;
 	handleSave: () => void;
 	handleUpdate: () => void;
-	handleRemove: () => void;
+	handleRemoveDialog: () => void;
 	setFormSchema: (data: FormInputs) => void;
 };
 

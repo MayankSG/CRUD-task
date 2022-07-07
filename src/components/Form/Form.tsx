@@ -12,8 +12,8 @@ const Form = ({
   formSchema,
   setFormSchema,
   handleSave,
-  handleRemove,
   handleUpdate,
+  handleRemoveDialog,
 }: FormProps) => {
   const history = useHistory();
   const [isUpdate, setIsUpdate] = useState(false);
@@ -34,10 +34,6 @@ const Form = ({
   const onSave = () => {
     if (type === FormType.edit && isUpdate) handleUpdate();
     handleSave();
-  };
-
-  const onRemove = () => {
-
   };
 
   return (
@@ -67,7 +63,7 @@ const Form = ({
         {type === FormType.edit && !isUpdate ? (
           <>
             <Button variant="contained" onClick={onUpdate}>Update</Button>
-            <Button variant="outlined" color="error" onClick={onRemove}>Delete</Button>
+            <Button variant="outlined" color="error" onClick={handleRemoveDialog}>Delete</Button>
           </>
         ) : (
           <>
