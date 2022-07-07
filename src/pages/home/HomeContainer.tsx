@@ -1,26 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAxios from 'axios-hooks';
 
 import Home from './Home';
 import styles from './Home.module.css';
+import { getItems } from '../../config/service';
 
 const HomeContainer = () => {
-
-  const [{ data, error, loading }, getItems] = useAxios(
-    {
-      url: 'https://jsonplaceholder.typicode.com/posts',
-      method: 'GET',
-    },
-    { manual: true },
-  );
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    getItems();
+    getItems()
+    .then((res) => setItems(res.data))
+    .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className={styles.cardContainer}>
-      <Home items={data} />
+      <Home items={items} />
     </div>
   );
 };
