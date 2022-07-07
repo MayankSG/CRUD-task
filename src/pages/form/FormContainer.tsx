@@ -1,10 +1,14 @@
 import React from 'react';
 
 import Form from './Form';
+import { FormProps } from './Form.types';
+import styles from './Form.module.css';
 
-const FormContainer = () => {
+const FormContainer = ({ type }: FormProps) => {
   return (
-    <Form />
+    <div className={styles.form}>
+      <Form type={type} />
+    </div>
   );
 };
 
