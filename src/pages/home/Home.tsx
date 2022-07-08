@@ -7,7 +7,9 @@ import ItemsList from './ItemsList';
 const Home = ({ items }: HomeProps) => (
   <>
     <Header />
-    <ItemsList items={items} />
+    {items && items.length > 0 && (
+      <ItemsList items={items} />
+    )}
   </>
 );
 

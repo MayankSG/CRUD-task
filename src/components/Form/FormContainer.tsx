@@ -7,7 +7,6 @@ import { FormInputs, FormProps } from './Form.types';
 import { createItem, getItem, removeItem, updateItem } from '../../config/service';
 import { AppRoute } from '../../app/routing/AppRoute.enum';
 import { SnackbarContext } from '../../app';
-import styles from './Form.module.css';
 import Loader from '../Loader';
 import RemoveItemDialog from '../RemoveItemDialog';
 import { useStyles } from './Form.styled';
@@ -24,6 +23,8 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
 
   const showNotifier = (open: boolean, severity: AlertColor, message: string) => {
     contextData?.handleNotifier({ open, severity, message });
+
+    if (severity === "success") history.push(AppRoute.home);
   };
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         if (res.data) {
           setLoading(false);
           showNotifier(true, "success", "Item has been created successfully!!");
-          history.push(AppRoute.home);
         }
       })
       .catch(() => {
@@ -64,7 +64,6 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         if (res.data) {
           setLoading(false);
           showNotifier(true, "success", "Item has been updated successfully!!");
-          history.push(AppRoute.home);
         }
       })
       .catch(() => {
@@ -81,7 +80,6 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
           setLoading(false);
           showNotifier(true, "success", "Item has been removed successfully!!");
           handleRemoveDialog();
-          history.push(AppRoute.home);
         }
       })
       .catch(() => {

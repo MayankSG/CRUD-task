@@ -17,7 +17,7 @@ const ItemsList = ({ items }: HomeProps) => {
 
 	const handlePagination = (event: any, value: any) => setPage(value);
 
-	const itemsData = useMemo(() => paginate(items, page, pageSize), [items, page, pageSize]);
+	const itemsData = useMemo(() => paginate(items, page, pageSize), [items, page]);
 
 	return (
 		<div className={classes.itemsContainer}>

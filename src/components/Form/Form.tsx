@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, OutlinedInput, TextareaAutosize } from '@mui/material';
+import { Box, Button, FormControl, OutlinedInput, TextareaAutosize, Tooltip } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import { FormProps } from './Form.types';
 import { FormType } from '../../utils/constants.enum';
@@ -21,9 +24,11 @@ const Form = ({
 
   const onUpdate = () => setIsUpdate(true);
 
+  const goToHome = () => history.push(AppRoute.home);
+
   const onCancel = () => {
+    if (!isUpdate) goToHome();
     setIsUpdate(false);
-    history.push(AppRoute.home);
   };
 
   const handleChange = (e: any) => {
@@ -39,7 +44,19 @@ const Form = ({
 
   return (
     <>
-      <h1>{type === FormType.edit ? "Edit Item" : "Create Item"}</h1>
+      <div className={classes.formHeader}>
+        <h1>{type === FormType.edit ? "Edit Item" : "Create Item"}</h1>
+        {type === FormType.edit && !isUpdate && (
+          <div className={classes.editButtons}>
+            <Tooltip title="Edit Item" placement="top-start">
+              <Button color="primary" onClick={onUpdate}><EditIcon /></Button>
+            </Tooltip>
+            <Tooltip title="Delete Item" placement="top-start">
+              <Button color="error" onClick={handleRemoveDialog}><DeleteIcon /></Button>
+            </Tooltip>
+          </div>
+        )}
+      </div>
       <Box component="form">
         <FormControl className={classes.formInputs}>
           <OutlinedInput
@@ -62,10 +79,10 @@ const Form = ({
       </Box>
       <div className={classes.button}>
         {type === FormType.edit && !isUpdate ? (
-          <>
-            <Button variant="contained" onClick={onUpdate}>Update</Button>
-            <Button variant="outlined" color="error" onClick={handleRemoveDialog}>Delete</Button>
-          </>
+          <Button variant="contained" onClick={goToHome}>
+            <ArrowBackIcon />
+            Back to home
+          </Button>
         ) : (
           <>
             <Button variant="contained" onClick={onSave}>Save</Button>
