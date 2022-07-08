@@ -1,3 +1,28 @@
+# Installation & Setup
+
+1. Install dependencies using `npm install`.
+2. Start app server using `npm start`.
+# Used Technologies
+
+1. Used ReactJS for frontend implementation.
+2. Used material ui (https://mui.com/) library for creating interactive UI.
+3. Used typescript for type checking (https://www.typescriptlang.org/docs/handbook/utility-types.html).
+# Steps of implementation an app
+
+1. Created routing pages '/home', '/create', '/details/${id}'.
+2. Created header by making it as fixed position & added "create item" button on the header.
+3. Displays the list of items by fetching the data from an api in the '/home' page.
+4. Added pagination to show the list in the pages format. As, it will be hard to read the item on the single page.
+5. On create item redirects to another page '/create' containing form.
+6. Create form contains 2 input fields i.e title, description. On "save" it will save data using an api and redirects to '/home' page on success.
+7. When click on any item it will redirect to that item detail page '/details/${id}'.
+8. Default, fields will be disabled containing the data of the item.
+9. On click of 'edit' field will be active and on "save" it will save the changed data using an api and redirects to '/home' page on success.
+10. Added dialog box for remove item confirmation popup.
+11. On click of "delete", confirmation pop up will display and if continue, item will be removed using an api and redirects to '/home' page on success.
+12. Added loader in apis when the api is in pending state.
+13. Added snackbar to show any sucess and error messages after api execution.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
