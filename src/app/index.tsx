@@ -4,7 +4,7 @@ import { SnackbarProps } from '../components/Snackbar/Snackbar.types';
 
 import AppRoutes from './routing/AppRoutes';
 
-const intialisedContext = { setNotifierState: (data: SnackbarProps) => { } }
+const intialisedContext = { handleNotifier: (data: SnackbarProps) => { } }
 export const SnackbarContext = React.createContext(intialisedContext);
 
 const App: React.FC = () => {
@@ -12,14 +12,10 @@ const App: React.FC = () => {
     open: false, severity: "success", message: "",
   });
 
-  const setNotifierState = (data: SnackbarProps) => {
-    handleNotifier(data);
-  };
-
   const { open, severity, message } = notifier;
 
   return (
-    <SnackbarContext.Provider value={{ setNotifierState }}>
+    <SnackbarContext.Provider value={{ handleNotifier }}>
       <AppRoutes />
       <CustomSnackbar message={message} open={open} severity={severity} />
     </SnackbarContext.Provider>

@@ -8,7 +8,7 @@ const CustomSnackbar = ({ message, open, severity }: SnackbarProps) => {
 	const contextData = useContext(SnackbarContext);
 
 	const handleClose = () => {
-		contextData?.setNotifierState({ open: false });
+		contextData?.handleNotifier({ open: false });
 	};
 
 	return (

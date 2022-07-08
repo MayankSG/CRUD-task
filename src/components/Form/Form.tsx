@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { FormProps } from './Form.types';
 import { FormType } from '../../utils/constants.enum';
 import { AppRoute } from '../../app/routing/AppRoute.enum';
-import styles from './Form.module.css';
+import { useStyles } from './Form.styled';
 
 const Form = ({
   type,
@@ -15,6 +15,7 @@ const Form = ({
   handleUpdate,
   handleRemoveDialog,
 }: FormProps) => {
+  const classes = useStyles();
   const history = useHistory();
   const [isUpdate, setIsUpdate] = useState(false);
 
@@ -40,11 +41,11 @@ const Form = ({
     <>
       <h1>{type === FormType.edit ? "Edit Item" : "Create Item"}</h1>
       <Box component="form">
-        <FormControl className={styles.formInputs}>
+        <FormControl className={classes.formInputs}>
           <OutlinedInput
             name="title"
             placeholder="Title"
-            className={styles.formTitle}
+            className={classes.formTitle}
             value={formSchema.title}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
@@ -52,14 +53,14 @@ const Form = ({
           <TextareaAutosize
             name="body"
             placeholder="Description"
-            className={styles.formDescription}
+            className={classes.formDescription}
             value={formSchema.body}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
           />
         </FormControl>
       </Box>
-      <div className={styles.button}>
+      <div className={classes.button}>
         {type === FormType.edit && !isUpdate ? (
           <>
             <Button variant="contained" onClick={onUpdate}>Update</Button>

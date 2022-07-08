@@ -10,8 +10,10 @@ import { SnackbarContext } from '../../app';
 import styles from './Form.module.css';
 import Loader from '../Loader';
 import RemoveItemDialog from '../RemoveItemDialog';
+import { useStyles } from './Form.styled';
 
 const FormContainer = ({ type }: Pick<FormProps, "type">) => {
+  const classes = useStyles();
   const history = useHistory();
   const { itemId } = useParams<{ itemId: string }>();
   const contextData = useContext(SnackbarContext);
@@ -21,7 +23,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
   const [showDialog, setShowDialog] = useState(false);
 
   const showNotifier = (open: boolean, severity: AlertColor, message: string) => {
-    contextData?.setNotifierState({ open, severity, message });
+    contextData?.handleNotifier({ open, severity, message });
   };
 
   useEffect(() => {
@@ -93,7 +95,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
   return (
     <>
       <Loader loading={loading} />
-      <div className={styles.form}>
+      <div className={classes.form}>
         <Form
           type={type}
           formSchema={formSchema}

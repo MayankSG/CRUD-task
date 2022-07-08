@@ -4,27 +4,21 @@ import { useHistory } from 'react-router-dom';
 
 import { HomeProps } from './Home.types';
 import { AppRoute } from '../../app/routing/AppRoute.enum';
-import styles from './Home.module.css';
+import { useStyles } from './Home.styled';
+import Header from '../../components/Header';
 
 const Home = ({ items }: HomeProps) => {
+  const classes = useStyles();
   const history = useHistory();
 
   return (
     <>
-      <div className={styles.createItem}>
-        <h1>Items</h1>
-        <Button
-          variant="contained"
-          onClick={() => history.push(AppRoute.create)}
-        >
-          Create Item
-        </Button>
-      </div>
+      <Header />
       {items?.map((item, index) => (
         <Card
           key={`card-${index}`}
           variant="outlined"
-          className={styles.card}
+          className={classes.card}
           onClick={() => history.push(`${AppRoute.details}/${item.id}`)}
         >
           <h3>{item?.title}</h3>
