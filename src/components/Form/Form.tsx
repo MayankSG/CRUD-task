@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, FormControl, OutlinedInput, TextareaAutosize, Tooltip, FormHelperText } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,18 +17,21 @@ const Form = ({
   handleSave,
   handleUpdate,
   handleRemoveDialog,
+  getItem,
+  isUpdate,
+  setIsUpdate,
 }: FormProps) => {
   const classes = useStyles();
   const history = useHistory();
   
-  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [isFieldUpdate, setIsFieldUpdate] = useState<boolean>(false);
   const [showMessage, setShowMessage] = useState<string>("");
   
   const { title, body } = formSchema;
 
   useEffect(() => {
     if (title && body) resetMessage();
-  }, [formSchema]);
+  }, [title, body]);
 
   const resetMessage = () => setShowMessage("");
 
@@ -40,11 +43,16 @@ const Form = ({
     resetMessage();
 
     if (!isUpdate) goToHome();
-    setIsUpdate(false);
+    else {
+      if (isFieldUpdate) getItem(); // if field changed but didn't saved and cancel
+      setIsUpdate(false);
+    }
   };
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
+
+    if (!isFieldUpdate) setIsFieldUpdate(true);
 
     setFormSchema({ ...formSchema, [name]: value });
   };
@@ -54,15 +62,21 @@ const Form = ({
       setShowMessage("Please fill all the required fields");
     } else {
       resetMessage();
+
       if (type === FormType.edit && isUpdate) handleUpdate();
-      handleSave();
+      else handleSave();
     }
   };
 
   return (
     <>
       <div className={classes.formHeader}>
-        <h1>{type === FormType.edit ? "Edit Item" : "Create Item"}</h1>
+        <h1>
+          {type === FormType.edit ?
+            isUpdate ? "Edit Item" : "Item Details"
+            : "Create Item"
+          }
+        </h1>
         {type === FormType.edit && !isUpdate && (
           <div className={classes.editButtons}>
             <Tooltip title="Edit Item" placement="top-start">
@@ -83,6 +97,7 @@ const Form = ({
             value={title}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
+            onFocus={() => setIsFieldUpdate(true)}
           />
           <TextareaAutosize
             name="body"
@@ -91,6 +106,7 @@ const Form = ({
             value={body}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
+            onFocus={() => setIsFieldUpdate(true)}
           />
           {showMessage && (
             <FormHelperText error className={classes.helperText}>{showMessage}</FormHelperText>

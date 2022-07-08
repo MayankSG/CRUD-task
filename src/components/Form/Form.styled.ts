@@ -62,7 +62,6 @@ export const useStyles = makeStyles(() => ({
 	},
 	helperText: {
 		display: 'flex',
-		alignSelf: 'end',
 		marginTop: '0 !important',
 		marginBottom: '15px !important',
 		marginLeft: '0 !important',

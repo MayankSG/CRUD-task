@@ -16,30 +16,31 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
   const history = useHistory();
   const { itemId } = useParams<{ itemId: string }>();
   const contextData = useContext(SnackbarContext);
-
+  
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [formSchema, setFormSchema] = useState<FormInputs>({ title: '', body: '' });
   const [showDialog, setShowDialog] = useState<boolean>(false);
 
   const showNotifier = (open: boolean, severity: AlertColor, message: string) => {
     contextData?.handleNotifier({ open, severity, message });
-
-    if (severity === "success") history.push(AppRoute.home);
   };
 
+  const getItemDetails = (itemId: string) => {
+    setLoading(true);
+    getItem(itemId)
+      .then((res) => {
+        setLoading(false);
+        setFormSchema(res.data);
+      })
+      .catch(() => {
+        setLoading(false);
+        showNotifier(true, "error", "There is some error on fetching item. Please try again!!");
+      });
+  }
+
   useEffect(() => {
-    if (itemId) {
-      setLoading(true);
-      getItem(itemId)
-        .then((res) => {
-          setLoading(false);
-          setFormSchema(res.data)
-        })
-        .catch(() => {
-          setLoading(false);
-          showNotifier(true, "error", "There is some error on fetching item. Please try again!!");
-        });
-    }
+    if (itemId) getItemDetails(itemId);
   }, [itemId]);
 
   const handleSave = () => {
@@ -49,6 +50,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         if (res.data) {
           setLoading(false);
           showNotifier(true, "success", "Item has been created successfully!!");
+          history.push(AppRoute.home);
         }
       })
       .catch(() => {
@@ -63,6 +65,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
       .then((res) => {
         if (res.data) {
           setLoading(false);
+          setIsUpdate(false);
           showNotifier(true, "success", "Item has been updated successfully!!");
         }
       })
@@ -79,6 +82,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
         if (res.data) {
           setLoading(false);
           showNotifier(true, "success", "Item has been removed successfully!!");
+          history.push(AppRoute.home);
           handleRemoveDialog();
         }
       })
@@ -101,6 +105,9 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
           handleSave={handleSave}
           handleUpdate={handleUpdate}
           handleRemoveDialog={handleRemoveDialog}
+          getItem={() => getItemDetails(itemId)}
+          setIsUpdate={setIsUpdate}
+          isUpdate={isUpdate}
         />
       </div>
       <RemoveItemDialog open={showDialog} onClose={handleRemoveDialog} action={handleRemove} />

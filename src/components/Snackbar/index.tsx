@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
 import { SnackbarProps } from './Snackbar.types';

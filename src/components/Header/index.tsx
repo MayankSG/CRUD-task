@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 

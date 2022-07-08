@@ -7,6 +7,9 @@ export type FormProps = {
 	handleUpdate: () => void;
 	handleRemoveDialog: () => void;
 	setFormSchema: (data: FormInputs) => void;
+	getItem: () => void;
+	isUpdate: boolean;
+	setIsUpdate: (data: boolean) => void;
 };
 
 export type FormInputs = {
