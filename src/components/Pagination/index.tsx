@@ -6,6 +6,7 @@ import { useStyles } from './Pagination.styled';
 
 const CustomPagination = ({ page, count, handleChange }: PaginationProps) => {
 	const classes = useStyles();
+
 	return (
 		<Pagination
 			color="primary"

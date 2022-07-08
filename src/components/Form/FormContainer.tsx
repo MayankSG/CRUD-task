@@ -19,7 +19,7 @@ const FormContainer = ({ type }: Pick<FormProps, "type">) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [formSchema, setFormSchema] = useState<FormInputs>({ title: '', body: '' });
-  const [showDialog, setShowDialog] = useState(false);
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
   const showNotifier = (open: boolean, severity: AlertColor, message: string) => {
     contextData?.handleNotifier({ open, severity, message });

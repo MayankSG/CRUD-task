@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Box, Button, FormControl, OutlinedInput, TextareaAutosize, Tooltip } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, FormControl, OutlinedInput, TextareaAutosize, Tooltip, FormHelperText } from '@mui/material';
 import { useHistory } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -20,13 +20,25 @@ const Form = ({
 }: FormProps) => {
   const classes = useStyles();
   const history = useHistory();
-  const [isUpdate, setIsUpdate] = useState(false);
+  
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const [showMessage, setShowMessage] = useState<string>("");
+  
+  const { title, body } = formSchema;
+
+  useEffect(() => {
+    if (title && body) resetMessage();
+  }, [formSchema]);
+
+  const resetMessage = () => setShowMessage("");
 
   const onUpdate = () => setIsUpdate(true);
 
   const goToHome = () => history.push(AppRoute.home);
 
   const onCancel = () => {
+    resetMessage();
+
     if (!isUpdate) goToHome();
     setIsUpdate(false);
   };
@@ -38,8 +50,13 @@ const Form = ({
   };
 
   const onSave = () => {
-    if (type === FormType.edit && isUpdate) handleUpdate();
-    handleSave();
+    if (!title && !body) {
+      setShowMessage("Please fill all the required fields");
+    } else {
+      resetMessage();
+      if (type === FormType.edit && isUpdate) handleUpdate();
+      handleSave();
+    }
   };
 
   return (
@@ -63,7 +80,7 @@ const Form = ({
             name="title"
             placeholder="Title"
             className={classes.formTitle}
-            value={formSchema.title}
+            value={title}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
           />
@@ -71,10 +88,13 @@ const Form = ({
             name="body"
             placeholder="Description"
             className={classes.formDescription}
-            value={formSchema.body}
+            value={body}
             onChange={handleChange}
             disabled={type === FormType.edit && !isUpdate}
           />
+          {showMessage && (
+            <FormHelperText error className={classes.helperText}>{showMessage}</FormHelperText>
+          )}
         </FormControl>
       </Box>
       <div className={classes.button}>

@@ -60,4 +60,12 @@ export const useStyles = makeStyles(() => ({
 			minWidth: 0,
 		},
 	},
+	helperText: {
+		display: 'flex',
+		alignSelf: 'end',
+		marginTop: '0 !important',
+		marginBottom: '15px !important',
+		marginLeft: '0 !important',
+		marginRight: '0 !important',
+	},
 }));

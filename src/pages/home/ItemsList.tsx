@@ -13,9 +13,10 @@ const pageSize = 10;
 const ItemsList = ({ items }: HomeProps) => {
 	const classes = useStyles();
 	const history = useHistory();
-	const [page, setPage] = useState(1);
 
-	const handlePagination = (event: any, value: any) => setPage(value);
+	const [page, setPage] = useState<number>(1);
+
+	const handlePagination = (event: any, value: number) => setPage(value);
 
 	const itemsData = useMemo(() => paginate(items, page, pageSize), [items, page]);
 

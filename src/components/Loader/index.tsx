@@ -7,6 +7,7 @@ import { useStyles } from './Loader.styled';
 
 const Loader = ({ loading }: LoaderProps) => {
 	const classes = useStyles();
+
 	return (
 		<>
 			{loading && (

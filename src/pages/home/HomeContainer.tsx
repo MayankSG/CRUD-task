@@ -5,12 +5,13 @@ import { getItems } from '../../config/service';
 import { SnackbarContext } from '../../app';
 import Loader from '../../components/Loader';
 import { useStyles } from './Home.styled';
+import { ItemProps } from './Home.types';
 
 const HomeContainer = () => {
   const classes = useStyles();
   const contextData = useContext(SnackbarContext);
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<ItemProps[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
