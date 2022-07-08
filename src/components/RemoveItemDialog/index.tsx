@@ -2,14 +2,18 @@ import React from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 import { RemoveItemDialogProps } from "./RemoveItemDialog.types";
+import { useStyles } from "./RemoveItemDialog.styled";
 
 const RemoveItemDialog = ({ open, onClose, action }: RemoveItemDialogProps) => {
+	const classes = useStyles();
+
 	return (
 		<Dialog
 			open={open}
 			onClose={onClose}
 			aria-labelledby="remove-item-dialog-title"
 			aria-describedby="remove-item-dialog-description"
+			className={classes.removeDialog}
 		>
 			<DialogTitle id="remove-item-dialog-title">
 				Remove Item
@@ -20,8 +24,8 @@ const RemoveItemDialog = ({ open, onClose, action }: RemoveItemDialogProps) => {
 				</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button onClick={action}>Yes</Button>
-				<Button onClick={onClose}>Cancel</Button>
+				<Button variant="contained" onClick={action}>Yes</Button>
+				<Button variant="outlined" onClick={onClose}>Cancel</Button>
 			</DialogActions>
 		</Dialog>
 	);

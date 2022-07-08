@@ -11,13 +11,15 @@ const Header = () => {
 
 	return (
 		<div className={classes.header}>
-			<h1>Items</h1>
-			<Button
-				variant="contained"
-				onClick={() => history.push(AppRoute.create)}
-			>
-				Create Item
-			</Button>
+			<div className={classes.headerContent}>
+				<h1>Items</h1>
+				<Button
+					variant="contained"
+					onClick={() => history.push(AppRoute.create)}
+				>
+					Create Item
+				</Button>
+			</div>
 		</div>
 	);
 };

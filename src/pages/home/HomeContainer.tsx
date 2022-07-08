@@ -32,7 +32,7 @@ const HomeContainer = () => {
 
   return (
     <>
-      <Loader loading={true} />
+      <Loader loading={loading} />
       <div className={classes.cardContainer}>
         <Home items={items} />
       </div>
