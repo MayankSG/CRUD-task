@@ -15,8 +15,8 @@ const CustomSnackbar = ({ message, open, severity }: SnackbarProps) => {
 		<Snackbar
 		  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
 			open={open}
-			autoHideDuration={2000}
-			onClose={handleClose}
+			autoHideDuration={5000}
+			onClose={() => handleClose()}
 		>
 			<Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
 				{message}
